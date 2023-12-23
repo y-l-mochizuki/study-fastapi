@@ -1,4 +1,5 @@
 version: "3"
+
 services:
   study-fastapi:
     build: .
@@ -6,6 +7,20 @@ services:
       - .dockervenv:/src/.venv
       - .:/src
     ports:
-      - 8000:8000 # ホストマシンのポート8000を、docker内のポート8000に接続する
+      - 8000:8000 # ホストマシンのポート 8000 を、docker 内のポート 8000 に転送する
     environment:
-      - WATCHFILES_FORCE_POLLING=true # 環境によってホットリロードのために必要
+      - WATCHFILES_FORCE_POLLING=true # 環境変化によってポーリングのために必要
+  db:
+    image: mysql:8.0
+    platform: linux/arm64 # Apple シリコンの Mac (M1/M2 など) の場合不要
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes" # root アカウントをパスワードなしで作成
+      MYSQL_DATABASE: "demo" # 初期データベースとして 'demo' を設定
+      TZ: "Asia/Tokyo" # タイムゾーンを日本時間に設定
+    volumes:
+      - mysql_data:/var/lib/mysql
+    command: --default-authentication-plugin=mysql_native_password # MySQL8.0 ではデフォルトが `caching_sha2_password` で、ドライバが対応外なのを変更
+    ports:
+      - 3306:3306 # ホストマシンのポート 3306 を、docker 内のポート 3306 に転送する
+volumes:
+  mysql_data:
