@@ -1,6 +1,5 @@
 from sqlalchemy import select
 from sqlalchemy.engine import Result
-from sqlalchemy.orm import Session
 from sqlalchemy.ext.asyncio import AsyncSession
 
 import api.models.task as task_model
@@ -28,7 +27,7 @@ async def get_task(db: AsyncSession, task_id: int) -> task_model.Task | None:
 
 
 async def update_task(
-    db: Session, task_create: task_schema.TaskCreate, original: task_model.Task
+    db: AsyncSession, task_create: task_schema.TaskCreate, original: task_model.Task
 ) -> task_model.Task:
     original.title = task_create.title
     db.add(original)
@@ -47,6 +46,6 @@ async def create_task(
     return task
 
 
-async def delete_task(db: Session, original: task_model.Task) -> None:
+async def delete_task(db: AsyncSession, original: task_model.Task) -> None:
     await db.delete(original)
     await db.commit()

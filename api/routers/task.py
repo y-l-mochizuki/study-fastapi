@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from api.db import get_db
 from fastapi import APIRouter, Depends, HTTPException
-from sqlarchemy.ext.asyncio import AsyncSession
+from sqlalchemy.ext.asyncio import AsyncSession
 
 import api.cruds.task as task_crud
 import api.schemas.task as task_schema
