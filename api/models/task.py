@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, ForeignKey, String
+from sqlalchemy import Column, Integer, ForeignKey, String, Date
 from sqlalchemy.orm import relationship
 
 from api.db import Base
@@ -9,6 +9,7 @@ class Task(Base):
 
     id = Column(Integer, primary_key=True)
     title = Column(String(1024))
+    due_date = Column(Date)
 
     done = relationship("Done", back_populates="task", cascade="delete")
 
