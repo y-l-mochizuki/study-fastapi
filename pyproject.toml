@@ -11,6 +11,7 @@ fastapi = "^0.105.0"
 uvicorn = {extras = ["standard"], version = "^0.24.0.post1"}
 sqlalchemy = "^2.0.23"
 pymysql = "^1.1.0"
+aiomysql = "^0.2.0"
 
 
 [build-system]
