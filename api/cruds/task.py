@@ -47,6 +47,6 @@ async def create_task(
     return task
 
 
-def delete_task(db: Session, original: task_model.Task) -> None:
-    db.delete(original)
-    db.commit()
+async def delete_task(db: Session, original: task_model.Task) -> None:
+    await db.delete(original)
+    await db.commit()
